@@ -536,12 +536,23 @@
 				<!--multilinespacing>20</multilinespacing-->
 				<script>
 					function onInit()
-						setTooltipText(getValue());
-						registerMenuItem(Interface.getString("radial_open_window"), "log", 4)
+						registerMenuItem(Interface.getString("radial_open_window"), "log", 4);
+						local node = window.getDatabaseNode();
+						local desc = node.getChild("description");
+						if desc ~= nil and desc.getText() ~= "" then
+							setTooltipText(desc.getText());
+						elseif node then
+							setTooltipText(getValue());
+						end
 					end
 					function onValueChanged()
-						Debug.console(getValue());
-						setTooltipText(getValue());
+						local node = window.getDatabaseNode();
+						local desc = node.getChild("description");
+						if desc ~= nil and desc.getText() ~= "" then
+							setTooltipText(desc.getText());
+						elseif node then
+							setTooltipText(getValue());
+						end
 					end
 					function onEnter()
 						return true;
@@ -755,12 +766,14 @@
 				<!--multilinespacing>20</multilinespacing-->
 				<script>
 					function onInit()
-						setTooltipText(getValue());
-						registerMenuItem(Interface.getString("radial_open_window"), "log", 4)
-					end
-					function onValueChanged()
-						Debug.console(getValue());
-						setTooltipText(getValue());
+						registerMenuItem(Interface.getString("radial_open_window"), "log", 4);
+						local node = window.getDatabaseNode();
+						local desc = node.getChild("description");
+						if desc ~= nil and desc.getText() ~= "" then
+							setTooltipText(desc.getText());
+						elseif node then
+							setTooltipText(getValue());
+						end
 					end
 					function onEnter()
 						return true;
@@ -848,12 +861,23 @@
 				<!--multilinespacing>20</multilinespacing-->
 				<script>
 					function onInit()
-						setTooltipText(getValue());
-						registerMenuItem(Interface.getString("radial_open_window"), "log", 4)
+						registerMenuItem(Interface.getString("radial_open_window"), "log", 4);
+						local node = window.getDatabaseNode();
+						local desc = node.getChild("description");
+						if desc ~= nil and desc.getText() ~= "" then
+							setTooltipText(desc.getText());
+						elseif node then
+							setTooltipText(getValue());
+						end
 					end
 					function onValueChanged()
-						Debug.console(getValue());
-						setTooltipText(getValue());
+						local node = window.getDatabaseNode();
+						local desc = node.getChild("description");
+						if desc ~= nil and desc.getText() ~= "" then
+							setTooltipText(desc.getText());
+						elseif node then
+							setTooltipText(getValue());
+						end
 					end
 					function onEnter()
 						return true;
@@ -938,8 +962,14 @@
 				<script>
 					function onInit()
 						registerMenuItem(Interface.getString("radial_open_window"), "log", 4)
-						nodeWin = window.getDatabaseNode();
-						nodeChecked = nodeWin.createChild("ischecked", "number");
+						local node = window.getDatabaseNode();
+						local text = node.getChild("description").getText();
+						if text ~= "" then
+							setTooltipText(text);
+						else
+							setTooltipText(getValue());
+						end
+						local nodeChecked = node.createChild("ischecked", "number");
 						if nodeChecked.getValue() == 1 then
 							setFont("checked-faction");
 							return;
@@ -947,13 +977,19 @@
 						setFont("unchecked-faction");
 					end
 					function onClickDown()
-						nodeWin = window.getDatabaseNode();
-						if nodeWin.getChild("ischecked").getValue() ~= 1 then
+						local node = window.getDatabaseNode();
+						local text = node.getChild("description").getText();
+						if text ~= "" then
+							setTooltipText(text);
+						else
+							setTooltipText(getValue());
+						end
+						if node.getChild("ischecked").getValue() ~= 1 then
 							setFont("checked-faction");
-							nodeWin.getChild("ischecked").setValue(1);
+							node.getChild("ischecked").setValue(1);
 							return true;
 						end
-						nodeWin.getChild("ischecked").setValue(0);
+						node.getChild("ischecked").setValue(0);
 						setFont("unchecked-faction");
 						return true;
 					end

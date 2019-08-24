@@ -98,6 +98,31 @@
 				<bounds>5,2,20,20</bounds>
 				<tabtarget next="name" />
 				<default>1</default>
+				<script>
+					function onInit()
+						sCount = tonumber(getValue());
+						updateHighlight(tonumber(getValue()));
+					end
+					function onValueChanged()
+						updateHighlight(tonumber(getValue()));
+					end
+					function updateHighlight(balance)
+						if balance == 0 then
+							setColor("#000000");
+							window.setBackColor(nil);
+							return;
+						end
+						if balance > 0 then
+							setColor("#006600");
+							window.setBackColor("#0A006600");
+							Debug.console("favor");
+						else
+							Debug.console("debt");
+							window.setBackColor("#0A990033");
+							setColor("#990033");
+						end
+					end
+				</script>
 			</basicnumber>
 
 			<genericcontrol name="rightanchor">
