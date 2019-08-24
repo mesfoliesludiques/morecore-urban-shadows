@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_notes" merge="join">
+		<sheetdata>
+			<frame_char name="detailframe">
+				<bounds>15,0,-29,45</bounds>
+			</frame_char>
+			<string_labeled name="race">
+				<anchored to="detailframe" position="insidetopleft" offset="15,10" width="80" height="20" />
+				<labelres>char_label_race</labelres>
+			</string_labeled>
+			<string_labeled name="gender">
+				<anchored to="race" position="right" offset="5,0" width="40" />
+				<labelres>char_label_gender</labelres>
+			</string_labeled>
+			<string_labeled name="age">
+				<anchored to="gender" position="right" offset="5,0" width="40" />
+				<labelres>char_label_age</labelres>
+			</string_labeled>
+			<string_labeled name="height">
+				<anchored to="age" position="right" offset="5,0" width="40" />
+				<labelres>char_label_height</labelres>
+			</string_labeled>
+			<string_labeled name="weight">
+				<anchored to="height" position="right" offset="5,0" width="40" />
+				<labelres>char_label_weight</labelres>
+			</string_labeled>
+		</sheetdata>
+	</windowclass>
+
+</root>

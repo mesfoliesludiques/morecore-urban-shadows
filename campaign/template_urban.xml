@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<template name="list_charfavor">
+		<windowlist>
+			<child></child>
+			<child><backcolor>1A40301E</backcolor></child>
+			<datasource>.favorlist</datasource>
+			<class>char_favoritem</class>
+			<allowdelete />
+			<script file="campaign/scripts/char_favorlist.lua" />
+		</windowlist>
+	</template>
+	<template name="button_corruptbox">
+		<buttonfield>
+			<state icon="button_corruptoff" />
+			<state icon="button_corrupton" />
+		</buttonfield>
+	</template>
+</root>

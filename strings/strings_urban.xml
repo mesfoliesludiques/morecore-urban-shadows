@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>	
+	<string name="char_label_factions">Factions</string>
+	<string name="char_label_attributes">Attributs</string>
+	<string name="char_label_basicmoves">Actions de base</string>
+	<string name="char_label_corruption">Corruption</string>
+	<string name="char_label_corruptmoves">Actions</string>
+	<string name="char_label_dramaticmoves">Actions dramatiques</string>
+	<string name="char_label_favormoves">Actions de faveurs</string>
+	<string name="char_label_playbookmoves">Actions de livret</string>
+	<string name="char_label_favors">Faveurs</string>
+	<string name="char_label_playbook">Livret</string>
+	<string name="char_label_wounds">Blessures</string>
+	<string name="char_label_protection">Protection</string>
+	<string name="char_drawback_dislo">Disloqué</string>
+	<string name="char_drawback_defig">Défiguré</string>
+	<string name="char_drawback_afflig">Affligé</string>
+	<string name="char_drawback_desax">Désaxé</string>
+	<string name="char_label_images">Images</string>
+	<string name="char_label_weapons">Armes</string>
+	<string name="char_label_favordescription">Description</string>
+	<string name="char_label_favorname">Nom</string>
+	<string name="radial_open_window">Ouvrir</string>
+</root>

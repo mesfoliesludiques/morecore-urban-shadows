@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+  Please see the license.html file included with this distribution for
+  attribution and copyright information.
+-->
+<root>
+
+	<font name="reference-h">
+		<ttf file="graphics/fonts/Catenary-Stamp.ttf" name="Catenary Stamp" size="20" />
+		<color value="#2b2b2b" />
+	</font>
+
+	<font name="sidebar">
+		<ttf file="graphics/fonts/Catenary-Stamp.ttf" name="Catenary Stamp" size="18" />
+		<color value="#e7e7e7" />
+	</font>
+	<font name="checked-faction">
+		<fgffile name="graphics/fonts/bold-10.fgf" />
+		<ttf file="graphics/fonts/Candara.ttf" name="Candara SDF" size="15" bold="true" />
+		<color value="#000000" />
+	</font>
+	<font name="unchecked-faction">
+		<fgffile name="graphics/fonts/regular-10.fgf" />
+		<ttf file="graphics/fonts/Candara.ttf" name="Candara SDF" size="15" bold="false" />
+		<color value="#545454" />
+	</font>
+
+</root>

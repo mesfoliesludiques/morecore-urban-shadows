@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+  Please see the license.html file included with this distribution for
+  attribution and copyright information.
+-->
+<root>
+	<!-- Logo - referenced by name "diehard" -->
+	<icon name="diehard" file="graphics/icons/diegaming_small.png" />
+
+	<!-- City Of Mist Logo you can replace the actual graphic used by editing this string -->
+	<icon name="rulesetlogo" file="graphics/icons/motw.png" />
+	
+	<!-- Sidebar -->
+	<icon name="button_characters" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_characters_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_book" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_book_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_maps" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_maps_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_people" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_people_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_encounters" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_encounters_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_items" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_items_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_notes" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_notes_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_parcels" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_parcels_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_quests" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_quests_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_tables" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_tables_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_cas" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_cas_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_mcmod" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_mcmod_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_mcability" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_mcability_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_mc_locations" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_mc_locations_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_mc_organisations" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_mc_organisations_down" file="graphics/sidebar/button_blank_down.png" />
+
+	<icon name="button_library" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_library_down" file="graphics/sidebar/button_blank_down.png" />
+	<icon name="button_tokencase" file="graphics/sidebar/button_blank.png" />
+	<icon name="button_tokencase_down" file="graphics/sidebar/button_blank_down.png" />	
+
+	<icon name="button_link" file="graphics/buttons/button_link.png" />
+	<icon name="button_link_down" file="graphics/buttons/button_link_down.png" />
+
+	<framedef name="statboxred">
+		<bitmap file="graphics/frames/statboxred.png" />
+		<offset>4,4,4,4</offset>
+	</framedef>
+	
+	<icon name="button_checkon" file="graphics/buttons/button_checkon.png" />
+	<icon name="button_checkoff" file="graphics/buttons/button_checkoff.png" />
+	<icon name="button_corrupton" file="graphics/buttons/button_corrupton.png" />
+	<icon name="button_corruptoff" file="graphics/buttons/button_corruptoff.png" />
+	<icon name="tab_favors" file="graphics/icons/tab_favors.png" />
+
+	<icon name="pbta" file="graphics/icons/button_pbta.png" />
+	<icon name="chat" file="graphics/icons/button_chat.png" />
+	<icon name="modifier" file="graphics/icons/button_modifier.png" />
+</root>

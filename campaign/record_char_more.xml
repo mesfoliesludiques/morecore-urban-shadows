@@ -1,0 +1,992 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+  Please see the license.html file included with this distribution for
+  attribution and copyright information.
+-->
+
+<root>
+	<!-- New WindowClass "charsheet_more" -->
+	<windowclass name="charsheet_more">
+		<!-- <script>
+			function onInit()
+				self.onSizeChanged = resizeFrames;
+			end
+
+			function resizeFrames(sourceWindow)
+				local nWidth,_ = getSize();
+				cas2.setStaticBounds((nWidth/2), 215, (nWidth/2)-15, 240)
+			end
+		</script> -->
+		<sheetdata>
+
+			<!-- New Frame taken from the record_char_notes.xml file  -->
+			<!-- Ruleset Graphic linked to campaign\template_char.xml -->
+			<frame_rulesetlogo name="logoframe">
+				<bounds>-199,0,170,45</bounds>
+			</frame_rulesetlogo>
+
+			<!-- Frame Anchor point and Label -->
+			<!-- New Frame for recording Combat Stats - many of which are linked to the CT. -->
+
+
+
+			<!-- ATTRIBUTES -->
+			<!-- Frame Co-ordinates  -->
+			<frame_char name="cas_attributes">
+				<anchored position="insidetopleft" offset="15,0">
+					<right anchor="left" offset="150" />
+					<bottom anchor="top" offset="145" />
+				</anchored>
+			</frame_char>
+			<label_frametop name="cas_attributes_label">
+				<anchored to="cas_attributes" />
+				<static textres="char_label_attributes" />
+			</label_frametop>
+			<!-- Code for draggable string rolls -->
+			<list_text name="cliroller_attributes">
+				<anchored to="cas_attributes">
+					<left offset="10" />
+					<top offset="30" />
+					<right offset="-4" />
+					<bottom offset="-10" />
+				</anchored>
+				<newfocus>name</newfocus>
+				<datasource>.clilist_attributes</datasource>
+				<class>cli_attributes</class>
+				<acceptdrop>
+					<class>cas</class>
+					<class>trackers</class>
+					<field>*</field>
+				</acceptdrop>
+			</list_text>
+
+			<!-- FACTIONS -->
+			<frame_char name="cas_factions">
+				<anchored to="cas_attributes" position="below">
+					<bottom anchor="bottom" offset="145" />
+				</anchored>
+			</frame_char>
+			<label_frametop name="cas_factions_label">
+				<anchored to="cas_factions" />
+				<static textres="char_label_factions" />
+			</label_frametop>
+			<!-- Code for draggable string rolls -->
+			<list_text name="cliroller_factions">
+				<anchored to="cas_factions">
+					<left offset="10" />
+					<top offset="30" />
+					<right offset="-4" />
+					<bottom offset="-10" />
+				</anchored>
+				<newfocus>name</newfocus>
+				<datasource>.clilist_factions</datasource>
+				<class>cli_factions</class>
+				<acceptdrop>
+					<class>cas</class>
+					<class>trackers</class>
+					<field>*</field>
+				</acceptdrop>
+			</list_text>
+			<scrollbar_rolls name="scroll_factions">
+				<anchored to="cas_factions" />
+				<target>cliroller_factions</target>
+			</scrollbar_rolls>
+
+			<!-- BASIC MOVES -->
+			<frame_char name="cas_basicmoves">
+				<anchored to="cas_attributes" position="right" offset="0,0">
+					<right parent="" offset="-185" />
+					<bottom offset="145" />
+				</anchored>
+			</frame_char>
+			<label_frametop name="cas_basicmoves_label">
+				<anchored to="cas_basicmoves" />
+				<static textres="char_label_basicmoves" />
+			</label_frametop>
+			<!-- Code for draggable string rolls -->
+			<list_text name="cliroller_basicmoves">
+				<anchored to="cas_basicmoves">
+					<left offset="10" />
+					<top offset="30" />
+					<right offset="-4" />
+					<bottom offset="-10" />
+				</anchored>
+				<newfocus>name</newfocus>
+				<datasource>.clilist_basicmoves</datasource>
+				<class>cli_rolls</class>
+				<acceptdrop>
+					<class>cas</class>
+					<class>trackers</class>
+					<field>*</field>
+				</acceptdrop>
+			</list_text>
+			<scrollbar_rolls name="scroll_basicmoves">
+				<anchored to="cas_basicmoves" />
+				<target>cliroller_basicmoves</target>
+			</scrollbar_rolls>
+
+			<!-- CORRUPTION MOVES -->
+			<frame_char name="cas_corruption">
+				<anchored position="insidetopright" offset="29,45">
+					<left anchor="right" offset="-185" />
+					<bottom anchor="top" offset="290" />
+				</anchored>
+			</frame_char>
+			<label_frametop name="cas_corruption_label">
+				<anchored to="cas_corruption" />
+				<static textres="char_label_corruption" />
+			</label_frametop>
+			<simplestring name="corrupt_trigger">
+				<anchored to="cas_corruption" height="65">
+					<left offset="10" />
+					<right offset="-10" />
+					<top offset="28" />
+				</anchored>
+				<multilinespacing>15</multilinespacing>
+			</simplestring>
+
+			<!-- Corruption Checkboxes -->
+			<button_corruptbox name="corruptcheck_1">
+				<anchored to="cas_corruption" width="30" height="15">
+					<left anchor="left" offset="17" />
+					<top offset="100" />
+				</anchored>
+			</button_corruptbox>
+			<button_corruptbox name="corruptcheck_2">
+				<anchored to="corruptcheck_1" position="right" width="30" offset="-8">
+				</anchored>
+			</button_corruptbox>
+			<button_corruptbox name="corruptcheck_3">
+				<anchored to="corruptcheck_1" position="right" offset="14,0" width="30">
+				</anchored>
+			</button_corruptbox>
+			<button_corruptbox name="corruptcheck_4">
+				<anchored to="corruptcheck_1" position="right" offset="36,0" width="30">
+				</anchored>
+			</button_corruptbox>
+			<button_corruptbox name="corruptcheck_5">
+				<anchored to="corruptcheck_1" position="right" offset="58,0" width="30">
+				</anchored>
+			</button_corruptbox>
+
+			<label_frametop name="cas_corruptmoves_label">
+				<anchored to="cas_corruption" offset="0,120"/>
+				<static textres="char_label_corruptmoves" />
+			</label_frametop>
+			<!-- Code for draggable string rolls -->
+			<list_text name="cliroller_corruptmoves">
+				<anchored to="cas_corruption">
+					<left offset="10" />
+					<top offset="138" />
+					<right offset="-4" />
+					<bottom offset="-10" />
+				</anchored>
+				<newfocus>name</newfocus>
+				<datasource>.clilist_corruptmoves</datasource>
+				<class>cli_rolls</class>
+				<acceptdrop>
+					<class>cas</class>
+					<class>trackers</class>
+					<field>*</field>
+				</acceptdrop>
+			</list_text>
+			<scrollbar_rolls name="scroll_corruptmoves">
+				<anchored to="cliroller_corruptmoves" />
+				<target>cliroller_corruptmoves</target>
+			</scrollbar_rolls>
+
+
+			<!-- DRAMATIC/FAVORS MOVES -->
+			<frame_char name="cas_othermoves">
+				<anchored to="cas_factions" position="below">
+					<bottom offset="200" />
+					<right anchor="right" offset="30" />
+				</anchored>
+			</frame_char>
+			<label_frametop name="cas_dramaticmoves_label">
+				<anchored to="cas_othermoves" />
+				<static textres="char_label_dramaticmoves" />
+			</label_frametop>
+			<!-- Code for draggable string rolls -->
+			<list_text name="cliroller_dramaticmoves">
+				<anchored to="cas_othermoves">
+					<left offset="10" />
+					<top offset="30" />
+					<right offset="-4" />
+					<bottom anchor="top" offset="75" />
+				</anchored>
+				<newfocus>name</newfocus>
+				<datasource>.clilist_dramaticmoves</datasource>
+				<class>cli_rolls</class>
+				<acceptdrop>
+					<class>cas</class>
+					<class>trackers</class>
+					<field>*</field>
+				</acceptdrop>
+			</list_text>
+			<scrollbar_rolls name="scroll_dramaticmoves">
+				<anchored to="cas_othermoves">
+					<bottom anchor="top" offset="75" />
+				</anchored>
+				<target>cliroller_dramaticmoves</target>
+			</scrollbar_rolls>
+
+			<label_frametop name="cas_favormoves_label">
+				<anchored to="cas_othermoves" offset="0,75"/>
+				<static textres="char_label_favormoves" />
+			</label_frametop>
+
+			<!-- Code for draggable string rolls -->
+			<list_text name="cliroller_favormoves">
+				<anchored to="cas_othermoves">
+					<left offset="10" />
+					<top offset="92" />
+					<right offset="-4" />
+					<bottom anchor="top" offset="180" />
+				</anchored>
+				<newfocus>name</newfocus>
+				<datasource>.clilist_favormoves</datasource>
+				<class>cli_rolls</class>
+				<acceptdrop>
+					<class>cas</class>
+					<class>trackers</class>
+					<field>*</field>
+				</acceptdrop>
+			</list_text>
+			<scrollbar_rolls name="scroll_favormoves">
+				<anchored to="cas_othermoves">
+					<top anchor="top" offset="87" />
+					<bottom anchor="top" offset="180" />
+				</anchored>
+				<target>cliroller_favormoves</target>
+			</scrollbar_rolls>
+			<!-- Playbook reference -->
+			<frame_char name="cas_playbooks">
+				<anchored to="cas_othermoves" position="below" offset="0,0">
+					<bottom parent="" offset="-1" />
+				</anchored>
+			</frame_char>
+			<label_frametop name="cas_playbooks_label">
+				<anchored to="cas_playbooks">
+					<top offset="10" />
+				</anchored>
+				<static textres="char_label_images" />
+			</label_frametop>
+			<list_pics name="playbook_images">
+				<anchored to="cas_playbooks">
+					<left offset="10" />
+					<top offset="28" />
+				</anchored>
+				<newfocus>name</newfocus>
+				<datasource>.reflist_playbooks</datasource>
+				<class>picslist</class>
+				<acceptdrop>
+					<class>imagewindow</class>
+					<class>referencetext</class>
+					<class>referencetextwide</class>
+					<field>*</field>
+				</acceptdrop>
+			</list_pics>
+
+			<!-- PLAYBOOK MOVES -->
+			<frame_char name="cas_playbookmoves">
+				<anchored to="cas_othermoves" position="right" offset="0,0">
+					<right parent="" offset="-185" />
+					<bottom parent="" offset="-1" />
+				</anchored>
+			</frame_char>
+			<label_frametop name="cas_playbookmoves_label">
+				<anchored to="cas_playbookmoves" />
+				<static textres="char_label_playbookmoves" />
+			</label_frametop>
+			<!-- Code for draggable string rolls -->
+			<list_text name="cliroller_playbookmoves">
+				<anchored to="cas_playbookmoves">
+					<left offset="10" />
+					<top offset="30" />
+					<right offset="-4" />
+					<bottom offset="-10" />
+				</anchored>
+				<newfocus>name</newfocus>
+				<datasource>.clilist_playbookmoves</datasource>
+				<class>cli_rolls</class>
+				<acceptdrop>
+					<class>cas</class>
+					<class>trackers</class>
+					<field>*</field>
+				</acceptdrop>
+			</list_text>
+			<scrollbar_rolls name="scroll_playbookmoves">
+				<anchored to="cas_playbookmoves" />
+				<target>cliroller_playbookmoves</target>
+			</scrollbar_rolls>
+			
+			<!-- Protection mini frame -->
+			<frame_char name="cas_protection">
+				<anchored to="cas_playbookmoves" position="right" offset="0,0">
+					<right parent="" offset="-29" />
+					<bottom anchor="top" offset="52" />
+				</anchored>
+			</frame_char>
+			<label name="label_protection">
+				<anchored to="cas_protection">
+					<left offset="25" />
+					<right offset="-50"/>
+					<top offset="15" />
+				</anchored>
+				<static textres="char_label_protection" />
+			</label>
+			<basicnumber name="protection">
+				<anchored to="label_protection" position="right" width="25">
+				</anchored>
+			</basicnumber>
+			
+			<!-- Wounds damage and protection -->
+			<frame_char name="cas_wounds">
+				<anchored to="cas_protection" position="below" offset="0,0">
+					<bottom offset="165" />
+				</anchored>
+			</frame_char>
+
+			<label_frametop name="cas_wounds_label">
+				<anchored to="cas_wounds">
+					<top offset="10" />
+				</anchored>
+				<static textres="char_label_wounds" />
+			</label_frametop>
+			<button_checkbox name="check_wounds_1">
+				<anchored to="cas_wounds" width="12" height="20">
+					<top offset="30" />
+					<right anchor="left" offset="22" />
+				</anchored>
+			</button_checkbox>
+			<button_checkbox name="check_wounds_2">
+				<anchored to="check_wounds_1" position="below" height="20" />
+			</button_checkbox>
+			<button_checkbox name="check_wounds_3">
+				<anchored to="check_wounds_2" position="right" offset="1" width="12" />
+			</button_checkbox>
+			<button_checkbox name="check_wounds_4">
+				<anchored to="check_wounds_2" position="below" height="20" />
+			</button_checkbox>
+			<button_checkbox name="check_wounds_5">
+				<anchored to="check_wounds_4" position="right" offset="1" width="12" />
+			</button_checkbox>
+			<stringu name="wounds">
+				<anchored to="check_wounds_1" position="right">
+					<top offset="-4" />
+					<left offset="30" />
+					<right parent="" offset="-40" />
+					<bottom offset="45" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<nodrag />
+			</stringu>
+			
+			<button_checkbox name="check_drawback_1">
+				<anchored to="cas_wounds" width="14" height="14">
+					<left offset="20" />
+					<top offset="96" />
+				</anchored>
+			</button_checkbox>
+
+			<simplestring name="label_drawback_1">
+				<anchored to="check_drawback_1">
+					<left offset="20" />
+					<top offset="-3" />
+				</anchored>
+				<static textres="char_drawback_dislo" />
+			</simplestring>
+
+			<button_checkbox name="check_drawback_2">
+				<anchored to="check_drawback_1" position="below" height="14">
+				</anchored>
+			</button_checkbox>
+			<simplestring name="label_drawback_2">
+				<anchored to="check_drawback_2" position="right">
+					<left offset="20" />
+					<top offset="-3" />
+				</anchored>
+				<static textres="char_drawback_defig" />
+			</simplestring>
+
+			<button_checkbox name="check_drawback_3">
+				<anchored to="check_drawback_2" position="below" height="14">
+				</anchored>
+			</button_checkbox>
+			<simplestring name="label_drawback_3">
+				<anchored to="check_drawback_3" position="right">
+					<left offset="20" />
+					<top offset="-3" />
+				</anchored>
+				<static textres="char_drawback_afflig" />
+			</simplestring>
+
+			<button_checkbox name="check_drawback_4">
+				<anchored to="check_drawback_3" position="below" height="14">
+				</anchored>
+			</button_checkbox>
+			<simplestring name="label_drawback_4">
+				<anchored to="check_drawback_4" position="right">
+					<left offset="20" />
+					<top offset="-3" />
+				</anchored>
+				<static textres="char_drawback_desax" />
+			</simplestring>
+
+			<!-- Weapons -->
+			<frame_char name="cas_weapons">
+				<anchored to="cas_wounds" position="below" offset="0,0">
+					<bottom parent="" offset="-1" />
+				</anchored>
+			</frame_char>
+			<label_frametop name="weapon_label">
+				<anchored to="cas_weapons">
+					<top offset="10" />
+				</anchored>
+				<static textres="char_label_weapons" />
+			</label_frametop>
+			<!-- Code for draggable string rolls -->
+			<list_text name="cliroller_weapons">
+				<anchored to="cas_weapons">
+					<left offset="10" />
+					<top offset="30" />
+					<right offset="-4" />
+					<bottom offset="-10" />
+				</anchored>
+				<newfocus>name</newfocus>
+				<datasource>.clilist_weapons</datasource>
+				<class>cli_weapons</class>
+				<acceptdrop>
+					<class>cas</class>
+					<class>trackers</class>
+					<field>*</field>
+				</acceptdrop>
+			</list_text>
+			<scrollbar_rolls name="scroll_weapons">
+				<anchored to="cas_weapons" />
+				<target>cliroller_weapons</target>
+			</scrollbar_rolls>
+			
+		</sheetdata>
+	</windowclass>
+
+	<!-- UTILS -->
+	<windowclass name="cli_rolls">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<!-- Create Right Anchor -->
+			<genericcontrol name="rightanchor">
+				<anchored height="0" width="0">
+					<top offset="2" />
+					<right />
+				</anchored>
+			</genericcontrol>
+			<!-- <visible /> -->
+
+			<!--button_idelete name="idelete">
+				<anchored to="rightanchor">
+					<top />
+					<right anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</button_idelete-->
+
+			<!-- Add Shortcut Button for use with Libraries or to store info -->
+			<linkfield name="shortcut">
+				<anchored to="rightanchor" width="18" height="18">
+					<top />
+					<right anchor="left" relation="relative" offset="-3" />
+				</anchored>
+				<class>cas</class>
+				<description field="name"/>
+				<readonly />
+			</linkfield>
+
+			<!-- Create Button Roll function to apply actions and position to the Button -->
+			<button_rolls_type name="rollstype">
+				<anchored to="shortcut" position="lefthigh" width="18" offset="2" height="16">
+					<right parent="shortcut" anchor="left" offset="-1" relation="relative"/>
+				</anchored>
+				<script file="common/scripts/morecore_rolls.lua" />
+			</button_rolls_type>
+
+			<!--
+				Three Parameter Fields for building rolls using a formula rather then hard coding
+				Note: parameter names are tied into the parameter_field.lua script
+				when looking up the hide checkboxes for each parameter.
+			-->
+			<genericcontrol name="paramanchor">
+				<anchored to="rollstype" position="left" width="0">
+					<right parent="rollstype" anchor="left" offset="4"/>
+				</anchored>
+			</genericcontrol>
+
+			<!-- Create Field to hold the Roll Info -->
+			<simplestring name="name">
+				<readonly />
+				<!--anchored to="rightanchor">
+					<top />
+					<left parent="" offset="5" />
+					<right anchor="left" relation="relative" offset="-60" />
+				</anchored-->
+				<anchored position="insidetopleft" offset="0,0" height="18">
+					<right parent="rightanchor" anchor="left" offset="-18" relation="relative"/>
+				</anchored>
+				<!--multilinespacing>20</multilinespacing-->
+				<script>
+					function onInit()
+						setTooltipText(getValue());
+						registerMenuItem(Interface.getString("radial_open_window"), "log", 4)
+					end
+					function onValueChanged()
+						Debug.console(getValue());
+						setTooltipText(getValue());
+					end
+					function onEnter()
+						return true;
+					end
+					function onDeleteUp()
+						if isReadOnly() then
+							return;
+						end
+					end
+					function onMenuSelection(nOption)
+						if nOption == 4 then
+							local node = window.getDatabaseNode();
+							Interface.openWindow("cas", node.getNodeName());
+						end
+					end
+				</script>
+			</simplestring>
+
+			<basicnumberred name="p3">
+				<anchored to="paramanchor" position="left" width="9">
+					<right parent="paramanchor" anchor="left" offset="-7" relation="relative"/>
+				</anchored>
+				<default>0</default>
+				<tooltip>
+					<text>Parameter 3</text>
+				</tooltip>
+				<tabtarget prev="p2"/>
+				<script file="scripts/parameter_field.lua" />
+			</basicnumberred>
+			<basicnumberred name="p2">
+				<anchored to="paramanchor" position="left" width="9">
+					<right parent="paramanchor" anchor="left" offset="-7" relation="relative"/>
+				</anchored>
+				<default>0</default>
+				<tooltip>
+					<text>Parameter 2</text>
+				</tooltip>
+				<tabtarget prev="p1" next="p3"/>
+				<script file="scripts/parameter_field.lua" />
+			</basicnumberred>
+			<basicnumberred name="p1">
+				<anchored to="paramanchor" position="left" width="9">
+					<right parent="paramanchor" anchor="left" offset="-7" relation="relative"/>
+				</anchored>
+				<default>0</default>
+				<tooltip>
+					<text>Parameter 1</text>
+				</tooltip>
+				<tabtarget next="p2"/>
+				<script file="scripts/parameter_field.lua" />
+			</basicnumberred>
+
+			<!-- Trackers -->
+			<number_statbox name="trackersname">
+				<min>0</min>
+				<max>100</max>
+				<anchored to="shortcut" position="left" width="13">
+					<right parent="shortcut" anchor="left" offset="14" relation="relative"/>
+				</anchored>
+				<!--anchored width="16" height="16">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored-->
+				<tabtarget prev="number_trackers" />
+				<droptypes>
+					<type>number</type>
+				</droptypes>
+				<noreset />
+				<delaykeyupdate />
+				<script file="scripts/tracker_field.lua" />
+				<script>
+					function onDoubleClick(x, y)
+						local rActor = ActorManager.getActor("pc", window.getDatabaseNode().getParent().getParent());
+						local nodeWin = window.getDatabaseNode();
+						local sSkillName = nodeWin.getChild("name").getValue();
+						local sTrackersIcon = nodeWin.getChild("trackers_icon").getValue();
+						local nSkillPoints = tonumber(window.getDatabaseNode().getChild("number_trackers").getValue());
+
+						if getValue() > 0 then
+							if Input.isAltPressed() then
+								txt1 = " (no spend)";
+								else
+									txt1 = " ";
+									setValue(getValue()-1);
+								end
+
+						local msg = {icon = sTrackersIcon};
+							msg.text = rActor.sName .. " is using a " .. sSkillName;
+							msg.text = rActor.sName .. " is using " .. sSkillName .. " (" .. getValue() .. " of " .. nSkillPoints .. " remaining)" .. txt1;
+
+							if Input.isShiftPressed() then
+								ModifierStack.addSlot(sSkillName, 1);
+								msg.text = msg.text .. " (mod applied)";
+								end
+
+							Comm.deliverChatMessage(msg);
+						else
+
+						end
+						return true;
+					end
+
+					function onWheel()
+						return true;
+					end
+
+					function onMenuSelection(item)
+						local nodeWin = window.getDatabaseNode();
+						if item == 3 then
+								local nMaxSkill = nodeWin.getChild("number_trackers").getValue();
+								local nOldSkill = nodeWin.getChild("trackersname").getValue();
+								nodeWin.getChild("trackersname").setValue(nMaxSkill);
+								local rActor = ActorManager.getActor("pc", window.getDatabaseNode().getParent().getParent());
+								local sSkillName = nodeWin.getChild("name").getValue();
+									local msg = {icon = "icon_heart"};
+										msg.text = rActor.sName .. " has reset " .. sSkillName .. "\rThe previous value was " .. nOldSkill;
+									Comm.deliverChatMessage(msg);
+						end
+						if item == 4 then
+						local nodeWin2 = window.getDatabaseNode().getParent();
+						local sPath = nodeWin2.getPath();
+								local last1 = string.match(sPath, "%da?$");
+								local sList = window.getDatabaseNode().getParent().getParent().getPath() .. ".cas" .. last1 .. "_label";
+
+							local aAllSkills = nodeWin2.getChildren();
+							for k,w in pairs(aAllSkills) do
+								local nodeWin = w.getPath();
+								local sMaxSkillPath = nodeWin .. ".number_trackers";
+								local nMaxSkill = DB.getValue(sMaxSkillPath);
+								local sCurSkillPath = nodeWin .. ".trackersname";
+								DB.setValue(nodeWin .. ".trackersname", "number", nMaxSkill);
+
+
+							end
+							local rActor = ActorManager.getActor("pc", window.getDatabaseNode().getParent().getParent());
+								local msg = {icon = "icon_heart"};
+								msg.text = rActor.sName .. " has reset all " .. DB.getValue(sList);
+								Comm.deliverChatMessage(msg);
+						end
+					end
+				</script>
+			</number_statbox>
+
+			<number_statbox name="number_trackers">
+				<anchored to="shortcut" position="left" width="13">
+					<right parent="shortcut" anchor="left" offset="-6" relation="relative"/>
+				</anchored>
+				<!--anchored width="16" height="16">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-8" />
+				</anchored-->
+				<tabtarget next="trackersname" />
+				<min>0</min>
+				<max>100</max>
+				<noreset />
+				<nodrag />
+				<delaykeyupdate />
+				<readonly />
+				<script file="scripts/tracker_field.lua" />
+			</number_statbox>
+
+
+
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="cli_attributes">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<!-- Create Right Anchor -->
+			<genericcontrol name="rightanchor">
+				<anchored height="0" width="0">
+					<top offset="4" />
+					<right />
+				</anchored>
+			</genericcontrol>
+			<!-- <visible /> -->
+
+			<!-- Create Button Roll function to apply actions and position to the Button -->
+			<button_rolls_type name="rollstype">
+				<anchored to="rightanchor" position="lefthigh" width="18" offset="2" height="16">
+					<right parent="rightanchor" anchor="left" offset="-5" relation="relative"/>
+					<top parent="rightanchor" offset="2" />
+				</anchored>
+				<script file="common/scripts/morecore_rolls.lua" />
+			</button_rolls_type>
+
+			<!--
+				Three Parameter Fields for building rolls using a formula rather then hard coding
+				Note: parameter names are tied into the parameter_field.lua script
+				when looking up the hide checkboxes for each parameter.
+			-->
+			<genericcontrol name="paramanchor">
+				<anchored to="rollstype" position="left" width="0">
+					<right parent="rollstype" anchor="left" offset="-2"/>
+					<!-- <top parent="rollstype" offset="2"/> -->
+				</anchored>
+			</genericcontrol>
+
+			<!-- Create Field to hold the Roll Info -->
+			<simplestring name="name">
+				<readonly />
+				<!--anchored to="rightanchor">
+					<top />
+					<left parent="" offset="5" />
+					<right anchor="left" relation="relative" offset="-60" />
+				</anchored-->
+				<anchored position="insidetopleft" offset="2,5" height="18">
+					<right parent="rightanchor" anchor="left" offset="-18" relation="relative"/>
+				</anchored>
+				<!--multilinespacing>20</multilinespacing-->
+				<script>
+					function onInit()
+						setTooltipText(getValue());
+						registerMenuItem(Interface.getString("radial_open_window"), "log", 4)
+					end
+					function onValueChanged()
+						Debug.console(getValue());
+						setTooltipText(getValue());
+					end
+					function onEnter()
+						return true;
+					end
+					function onDeleteUp()
+						if isReadOnly() then
+							return;
+						end
+					end
+					function onMenuSelection(nOption)
+						if nOption == 4 then
+							local node = window.getDatabaseNode();
+							Interface.openWindow("cas", node.getNodeName());
+						end
+					end
+				</script>
+			</simplestring>
+
+			<basicnumberred name="p1">
+				<anchored to="paramanchor" position="left" width="14">
+					<right parent="paramanchor" anchor="left" offset="-7" relation="relative"/>
+				</anchored>
+				<default>0</default>
+				<tooltip>
+					<text>Parameter 1</text>
+				</tooltip>
+				<!-- <tabtarget next="p2"/> -->
+				<script file="scripts/parameter_field.lua" />
+			</basicnumberred>
+
+			<!-- Trackers -->
+			<number_statbox name="trackersname">
+				<anchored width="16" height="16">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<script file="scripts/tracker_field.lua" />
+			</number_statbox>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="cli_weapons">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<!-- Create Right Anchor -->
+			<genericcontrol name="rightanchor">
+				<anchored height="0" width="0">
+					<top offset="4" />
+					<right />
+				</anchored>
+			</genericcontrol>
+			<!-- <visible /> -->
+
+			<!-- Create Button Roll function to apply actions and position to the Button -->
+			<button_rolls_type name="rollstype">
+				<anchored to="rightanchor" position="lefthigh" width="18" offset="2" height="16">
+					<right parent="rightanchor" anchor="left" offset="-5" relation="relative"/>
+					<top parent="rightanchor" offset="2" />
+				</anchored>
+				<script file="common/scripts/morecore_rolls.lua" />
+			</button_rolls_type>
+
+			<!--
+				Three Parameter Fields for building rolls using a formula rather then hard coding
+				Note: parameter names are tied into the parameter_field.lua script
+				when looking up the hide checkboxes for each parameter.
+			-->
+			<genericcontrol name="paramanchor">
+				<anchored to="rollstype" position="left" width="0">
+					<right parent="rollstype" anchor="left" offset="-2"/>
+					<!-- <top parent="rollstype" offset="2"/> -->
+				</anchored>
+			</genericcontrol>
+
+			<!-- Create Field to hold the Roll Info -->
+			<simplestring name="name">
+				<!--anchored to="rightanchor">
+					<top />
+					<left parent="" offset="5" />
+					<right anchor="left" relation="relative" offset="-60" />
+				</anchored-->
+				<anchored position="insidetopleft" offset="2,5" height="18">
+					<right parent="rightanchor" anchor="left" offset="-18" relation="relative"/>
+				</anchored>
+				<!--multilinespacing>20</multilinespacing-->
+				<script>
+					function onInit()
+						setTooltipText(getValue());
+						registerMenuItem(Interface.getString("radial_open_window"), "log", 4)
+					end
+					function onValueChanged()
+						Debug.console(getValue());
+						setTooltipText(getValue());
+					end
+					function onEnter()
+						return true;
+					end
+					function onDeleteUp()
+						if isReadOnly() then
+							return;
+						end
+					end
+					function onMenuSelection(nOption)
+						if nOption == 4 then
+							local node = window.getDatabaseNode();
+							Interface.openWindow("cas", node.getNodeName());
+						end
+					end
+				</script>
+			</simplestring>
+
+			<basicnumberred name="p1">
+				<anchored to="paramanchor" position="left" width="14">
+					<right parent="paramanchor" anchor="left" offset="-7" relation="relative"/>
+				</anchored>
+				<default>0</default>
+				<tooltip>
+					<text>Parameter 1</text>
+				</tooltip>
+				<!-- <tabtarget next="p2"/> -->
+				<script file="scripts/parameter_field.lua" />
+			</basicnumberred>
+
+			<!-- Trackers -->
+			<number_statbox name="trackersname">
+				<anchored width="16" height="16">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<script file="scripts/tracker_field.lua" />
+			</number_statbox>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="cli_factions">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<!-- Create Right Anchor -->
+			<genericcontrol name="rightanchor">
+				<anchored height="0" width="0">
+					<top offset="4" />
+					<right />
+				</anchored>
+			</genericcontrol>
+			<!-- <visible /> -->
+
+			<!-- Create Button Roll function to apply actions and position to the Button -->
+			<button_rolls_type name="rollstype">
+				<anchored to="rightanchor" position="lefthigh" width="18" offset="2" height="16">
+					<right parent="rightanchor" anchor="left" offset="-5" relation="relative"/>
+					<top parent="rightanchor" offset="2" />
+				</anchored>
+				<script file="common/scripts/morecore_rolls.lua" />
+			</button_rolls_type>
+
+			<!--
+				Three Parameter Fields for building rolls using a formula rather then hard coding
+				Note: parameter names are tied into the parameter_field.lua script
+				when looking up the hide checkboxes for each parameter.
+			-->
+			<genericcontrol name="paramanchor">
+				<anchored to="rollstype" position="left" width="0">
+					<right parent="rollstype" anchor="left" offset="-2"/>
+					<!-- <top parent="rollstype" offset="2"/> -->
+				</anchored>
+			</genericcontrol>
+
+			<!-- Create Field to hold the Roll Info -->
+			<simplestring name="name">
+				<readonly />
+				<anchored position="insidetopleft" offset="2,5" height="18">
+					<right parent="rightanchor" anchor="left" offset="-18" relation="relative"/>
+				</anchored>
+				<!--multilinespacing>20</multilinespacing-->
+				<script>
+					function onInit()
+						registerMenuItem(Interface.getString("radial_open_window"), "log", 4)
+						nodeWin = window.getDatabaseNode();
+						nodeChecked = nodeWin.createChild("ischecked", "number");
+						if nodeChecked.getValue() == 1 then
+							setFont("checked-faction");
+							return;
+						end
+						setFont("unchecked-faction");
+					end
+					function onClickDown()
+						nodeWin = window.getDatabaseNode();
+						if nodeWin.getChild("ischecked").getValue() ~= 1 then
+							setFont("checked-faction");
+							nodeWin.getChild("ischecked").setValue(1);
+							return true;
+						end
+						nodeWin.getChild("ischecked").setValue(0);
+						setFont("unchecked-faction");
+						return true;
+					end
+					function onMenuSelection(nOption)
+						if nOption == 4 then
+							local node = window.getDatabaseNode();
+							Interface.openWindow("cas", node.getNodeName());
+						end
+					end
+				</script>
+			</simplestring>
+
+			<basicnumberred name="p1">
+				<anchored to="paramanchor" position="left" width="14">
+					<right parent="paramanchor" anchor="left" offset="-7" relation="relative"/>
+				</anchored>
+				<default>0</default>
+				<tooltip>
+					<text>Parameter 1</text>
+				</tooltip>
+				<!-- <tabtarget next="p2"/> -->
+				<script file="scripts/parameter_field.lua" />
+			</basicnumberred>
+			<!-- Trackers -->
+			<number_statbox name="trackersname">
+				<anchored width="16" height="16">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<script file="scripts/tracker_field.lua" />
+			</number_statbox>
+		</sheetdata>
+	</windowclass>
+
+
+</root>

@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+  Please see the license.html file included with this distribution for
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="cas">
+		<frame>recordsheet</frame>
+		<placement>
+			<size width="350" height="480" />
+		</placement>
+		<sizelimits>
+			<minimum width="350" height="400" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_item</minimize>
+		<tooltip field="name" />
+		<sharable />
+		<nodelete />
+		<script>
+			function onInit()
+				onLockChanged();
+				DB.addHandler(DB.getPath(getDatabaseNode(), "locked"), "onUpdate", onLockChanged);
+			end
+			function onClose()
+				DB.removeHandler(DB.getPath(getDatabaseNode(), "locked"), "onUpdate", onLockChanged);
+			end
+			function onLockChanged()
+				if header.subwindow then
+					header.subwindow.update();
+				end
+				if content.subwindow then
+					content.subwindow.update();
+				end
+			end
+		</script>
+		<sheetdata>
+			<sub_record_header name="header">
+				<class>cas_header</class>
+			</sub_record_header>
+
+			<frame_record_content name="contentframe" />
+
+			<subwindow_record name="content">
+				<class>cas_stats</class>
+				<activate />
+			</subwindow_record>
+			<scrollbar_record>
+				<target>content</target>
+			</scrollbar_record>
+
+			<resize_recordsheet />
+			<close_recordsheet />
+			<helper_mc_rolls />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="cas_header">
+		<margins control="0,0,0,7" />
+		<script>
+			function onInit()
+				update();
+			end
+			function update()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				name.setReadOnly(bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<link_record_header>
+				<class>cas</class>
+			</link_record_header>
+
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="37" />
+					<right offset="-60" parent="" />
+				</anchored>
+				<empty textres="cas_emptyname" />
+			</string_record_name>
+
+			<button_rolls_type name="rollstype">
+				<anchored>
+					<top offset="5"/>
+					<right offset="-20" parent="" />
+				</anchored>
+				<script>
+				</script>
+			</button_rolls_type>
+
+			<anchor_record_header_right name="rightanchor" />
+			<icon_record_locked />
+			<button_record_locked />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="cas_stats">
+		<script>
+			function onInit()
+				update();
+			end
+			function update()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				description.setReadOnly(bReadOnly);
+				clichatcommand.setReadOnly(bReadOnly);
+				
+				tracker_label.setVisible(not bReadOnly);
+				tracker_enabled.setVisible(not bReadOnly);
+				tracker_number.setVisible(not bReadOnly);
+				number_trackers.setVisible(not bReadOnly);
+				trackers_icon.setVisible(not bReadOnly);
+				
+				formula_label.setVisible(not bReadOnly);
+				parameter_formula_enabled.setVisible(not bReadOnly);
+				formula_label_parameter.setVisible(not bReadOnly);
+				parameter_formula.setVisible(not bReadOnly);
+				
+				checkboxcolumnsanchor.setVisible(not bReadOnly);
+				p1_hidden.setVisible(not bReadOnly);
+				p2_hidden.setVisible(not bReadOnly);
+				p3_hidden.setVisible(not bReadOnly);
+				hide_label.setVisible(not bReadOnly);
+				hide_p1_label.setVisible(not bReadOnly);
+				hide_p2_label.setVisible(not bReadOnly);
+				hide_p3_label.setVisible(not bReadOnly);
+				
+				tooltip_p1_label.setVisible(not bReadOnly);
+				tooltip_p2_label.setVisible(not bReadOnly);
+				tooltip_p3_label.setVisible(not bReadOnly);
+				p1_tooltip.setVisible(not bReadOnly);
+				p2_tooltip.setVisible(not bReadOnly);
+				p3_tooltip.setVisible(not bReadOnly);
+				
+				refa_label.setVisible(not bReadOnly);
+				refb_label.setVisible(not bReadOnly);
+				refc_label.setVisible(not bReadOnly);
+				refa.setVisible(not bReadOnly);
+				refb.setVisible(not bReadOnly);
+				refc.setVisible(not bReadOnly);
+				
+				
+				line2.setVisible(not bReadOnly);
+				line3.setVisible(not bReadOnly);
+				line4.setVisible(not bReadOnly);
+				
+				if (clichatcommand.getValue() == "" and bReadOnly) then
+					clichatcommand.setVisible(false);
+					line1.setVisible(false);
+					ref_label.setVisible(false);
+				else
+					clichatcommand.setVisible(true);
+					ref_label.setVisible(true);
+				end
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+
+			<line_column name="line1" />
+			<label_column name="ref_label">
+				<static textres="ref_label_command" />
+			</label_column>
+			<string_column name="clichatcommand">
+					<script>
+					function onLoseFocus( )
+
+						local nameWindowDBNode = window.getDatabaseNode();
+						local nodeWin = nameWindowDBNode;
+						local sName = nodeWin.getChild("name").getValue();
+						local sCommand = nodeWin.getChild("clichatcommand").getValue();
+						local sRollstype = nodeWin.getChild("rollstype").getValue();
+
+
+						local nStart,nEnd,sCommand,sParams = string.find(sCommand, '^/([^%s]+)%s*(.*)');
+						if sCommand == "rollon" then
+							nodeWin.getChild("rollstype").setValue("table");
+						elseif sCommand == "mod" then
+							nodeWin.getChild("rollstype").setValue("modifier");
+						elseif sCommand == "damage" then
+							nodeWin.getChild("rollstype").setValue("damage");
+						elseif sCommand == "heal" then
+							nodeWin.getChild("rollstype").setValue("heal");
+						elseif sCommand == "sthrow" then
+							nodeWin.getChild("rollstype").setValue("saving");
+						elseif sCommand == "symb" then
+							nodeWin.getChild("rollstype").setValue("symb");
+						elseif sCommand == "thac0" then
+							nodeWin.getChild("rollstype").setValue("attack");
+						elseif sCommand == "harn" then
+							nodeWin.getChild("rollstype").setValue("harn");
+						elseif sCommand == "harnskill" then
+							nodeWin.getChild("rollstype").setValue("harnskill");
+						elseif sCommand == "dsr" then
+							nodeWin.getChild("rollstype").setValue("dsr");
+						elseif sCommand == "conan" then
+							nodeWin.getChild("rollstype").setValue("conan");
+						elseif sCommand == "ubiquity" then
+							nodeWin.getChild("rollstype").setValue("ubiquity");
+						elseif sCommand == "champions" then
+							nodeWin.getChild("rollstype").setValue("champions");
+						elseif sCommand == "cstun" then
+							nodeWin.getChild("rollstype").setValue("champions-stun");
+						elseif sCommand == "championsstun" then
+							nodeWin.getChild("rollstype").setValue("champions-stun");
+						elseif sCommand == "ckill" then
+							nodeWin.getChild("rollstype").setValue("champions-kill");
+						elseif sCommand == "cskill" then
+							nodeWin.getChild("rollstype").setValue("champions-skill");
+						elseif sCommand == "boon" then
+							nodeWin.getChild("rollstype").setValue("boon");
+						elseif sCommand == "bane" then
+							nodeWin.getChild("rollstype").setValue("bane");
+						elseif sCommand == "coriolis" then
+							nodeWin.getChild("rollstype").setValue("coriolis");
+						elseif sCommand == "rnkd" then
+							nodeWin.getChild("rollstype").setValue("legenddmg");
+						elseif sCommand == "rnkdk" then
+							nodeWin.getChild("rollstype").setValue("legenddmg");
+						elseif sCommand == "rnk" then
+							nodeWin.getChild("rollstype").setValue("legend");
+						elseif sCommand == "rnke" then
+							nodeWin.getChild("rollstype").setValue("legendemph");
+						elseif sCommand == "trav" then
+							nodeWin.getChild("rollstype").setValue("traveller");
+						elseif sCommand == "blackcrusade" then
+							nodeWin.getChild("rollstype").setValue("blackcrusade");
+						elseif sCommand == "spell" then
+							nodeWin.getChild("rollstype").setValue("spell");
+						elseif sCommand == "cleric" then
+							nodeWin.getChild("rollstype").setValue("cleric");
+						elseif sCommand == "druid" then
+							nodeWin.getChild("rollstype").setValue("druid");
+						elseif sCommand == "bard" then
+							nodeWin.getChild("rollstype").setValue("bard");
+						elseif sCommand == "skull" then
+							nodeWin.getChild("rollstype").setValue("skull");
+						elseif sCommand == "pent" then
+							nodeWin.getChild("rollstype").setValue("pent");
+						elseif sCommand == "fireball" then
+							nodeWin.getChild("rollstype").setValue("fireball");
+						elseif sCommand == "flame" then
+							nodeWin.getChild("rollstype").setValue("flame");
+						elseif sCommand == "wizard" then
+							nodeWin.getChild("rollstype").setValue("wizard");
+						elseif sCommand == "hitos" then
+							nodeWin.getChild("rollstype").setValue("hitos");
+						elseif sCommand == "talislanta" then
+							nodeWin.getChild("rollstype").setValue("talislanta");
+						elseif sCommand == "trav" then
+							nodeWin.getChild("rollstype").setValue("traveller");
+						elseif sCommand == "cypher" then
+							nodeWin.getChild("rollstype").setValue("cypher");
+						elseif sCommand == "pbta" then
+							nodeWin.getChild("rollstype").setValue("pbta");
+						elseif sCommand == "pulpinv" then
+							nodeWin.getChild("rollstype").setValue("pulpinv");
+						elseif sCommand == "pulpgen" then
+							nodeWin.getChild("rollstype").setValue("pulpgen");
+						elseif sCommand == "ability" then
+							nodeWin.getChild("rollstype").setValue("myhand");
+						elseif sCommand == "mtrait" then
+							nodeWin.getChild("rollstype").setValue("animal");
+						elseif sCommand == "trait" then
+							nodeWin.getChild("rollstype").setValue("helmet");
+						elseif sCommand == "pendragon" then
+							nodeWin.getChild("rollstype").setValue("dragon");
+						elseif sCommand == "edie" then
+							nodeWin.getChild("rollstype").setValue("bomb");
+						elseif sCommand == "edies" then
+							nodeWin.getChild("rollstype").setValue("bomborange");
+						elseif sCommand == "successes" then
+							nodeWin.getChild("rollstype").setValue("successes");
+						elseif sCommand == "sfdice" then
+							nodeWin.getChild("rollstype").setValue("sfdice");
+						elseif sCommand == "qin" then
+							nodeWin.getChild("rollstype").setValue("yinyang");
+						elseif sCommand == "woddice" then
+							nodeWin.getChild("rollstype").setValue("wod");
+						elseif sCommand == "bfeat" then
+							nodeWin.getChild("rollstype").setValue("bfeat");
+						elseif sCommand == "stunt" then
+							nodeWin.getChild("rollstype").setValue("stunt");
+						elseif sCommand == "stuntdmg" then
+							nodeWin.getChild("rollstype").setValue("stuntdmg");
+						elseif sCommand == "branged" then
+							nodeWin.getChild("rollstype").setValue("branged");
+						elseif sCommand == "bmelee" then
+							nodeWin.getChild("rollstype").setValue("bmelee");
+						elseif sCommand == "breaction" then
+							nodeWin.getChild("rollstype").setValue("breaction");
+						elseif sCommand == "bsave" then
+							nodeWin.getChild("rollstype").setValue("bsave");
+						elseif sCommand == "bspell" then
+							nodeWin.getChild("rollstype").setValue("bspell");
+						elseif sCommand == "bcleric" then
+							nodeWin.getChild("rollstype").setValue("bcleric");
+						elseif sCommand == "btalent" then
+							nodeWin.getChild("rollstype").setValue("btalent");
+						elseif sCommand == "btechnique" then
+							nodeWin.getChild("rollstype").setValue("btechnique");
+						elseif sCommand == "rolllow" then
+							nodeWin.getChild("rollstype").setValue("rolllow");
+						elseif sCommand == "chall" then
+							nodeWin.getChild("rollstype").setValue("challenge");
+						elseif sCommand == "dsaatt" then
+							nodeWin.getChild("rollstype").setValue("dsaatt");
+						elseif sCommand == "dsaatk" then
+							nodeWin.getChild("rollstype").setValue("dsaatk");
+						elseif sCommand == "dsaskill" then
+							nodeWin.getChild("rollstype").setValue("dsaskill");
+						elseif sCommand == "dsainit" then
+                            nodeWin.getChild("rollstype").setValue("dsainit");
+                        elseif sCommand == "dsadamage" then
+                            nodeWin.getChild("rollstype").setValue("dsadamage");
+						elseif sCommand == "ave" then
+							nodeWin.getChild("rollstype").setValue("ave");
+						elseif sCommand == "trolls" then
+							nodeWin.getChild("rollstype").setValue("trolls");
+						elseif sCommand == "explode" then
+							nodeWin.getChild("rollstype").setValue("bomb");
+						elseif sCommand == "torg" then
+							nodeWin.getChild("rollstype").setValue("torg");
+						elseif sCommand == "torgu" then
+							nodeWin.getChild("rollstype").setValue("torgu");
+						elseif sCommand == "torgbd" then
+							nodeWin.getChild("rollstype").setValue("torgbd");
+						elseif sCommand == "vagrant" then
+							nodeWin.getChild("rollstype").setValue("vagrant");
+                        elseif sCommand == "mamen" then
+                            nodeWin.getChild("rollstype").setValue("mamen");
+                        elseif sCommand == "maweapon" then
+                            nodeWin.getChild("rollstype").setValue("maweapon");
+						elseif sCommand == "pnp" then
+							nodeWin.getChild("rollstype").setValue("pnp");
+						elseif sCommand == "tiny" then
+							nodeWin.getChild("rollstype").setValue("tiny");
+						elseif sCommand == "crom" then
+							nodeWin.getChild("rollstype").setValue("crom");
+						elseif sCommand == "exalted" then
+							nodeWin.getChild("rollstype").setValue("exalted");
+						elseif sCommand == "ring" then
+							nodeWin.getChild("rollstype").setValue("ring");
+						elseif sCommand == "exalteddmg" then
+							nodeWin.getChild("rollstype").setValue("exalteddmg");
+						elseif sCommand == "kult" then
+							nodeWin.getChild("rollstype").setValue("kult");
+						elseif sCommand == "weg" then
+							nodeWin.getChild("rollstype").setValue("weg");
+						elseif sCommand == "unisystem" then
+							nodeWin.getChild("rollstype").setValue("unisystem");
+						elseif sCommand == "crit" then
+							nodeWin.getChild("rollstype").setValue("crit");
+						elseif sCommand == "ad2300" then
+							nodeWin.getChild("rollstype").setValue("ad2300");
+						elseif sCommand == "btech" then
+							nodeWin.getChild("rollstype").setValue("btech");
+						elseif sCommand == "btechu" then
+							nodeWin.getChild("rollstype").setValue("btechu");
+						elseif sCommand == "frag" then
+							nodeWin.getChild("rollstype").setValue("frag");
+						elseif sCommand == "fragatt" then
+							nodeWin.getChild("rollstype").setValue("fragatt");
+						elseif sCommand == "hackm" then
+							nodeWin.getChild("rollstype").setValue("hackm");
+						elseif sCommand == "hackmbs" then
+							nodeWin.getChild("rollstype").setValue("hackmbs");
+						elseif sCommand == "cod" then
+							nodeWin.getChild("rollstype").setValue("cod");
+						elseif sCommand == "witcher" then
+							nodeWin.getChild("rollstype").setValue("witcher");
+						elseif sCommand == "witcherattack" then
+							nodeWin.getChild("rollstype").setValue("witcherattack");
+						elseif sCommand == "witchermonster" then
+							nodeWin.getChild("rollstype").setValue("witchermonster");
+						elseif sCommand == "mbook" then
+							nodeWin.getChild("rollstype").setValue("masterbook");
+						elseif sCommand == "afmbe" then
+							nodeWin.getChild("rollstype").setValue("afmbe");
+						elseif sCommand == "seventh" then
+							nodeWin.getChild("rollstype").setValue("seventh");
+						elseif sCommand == "wrath" then
+							nodeWin.getChild("rollstype").setValue("wrath");
+						elseif sCommand == "wrathe" then
+							nodeWin.getChild("rollstype").setValue("wrathe");
+						elseif sCommand == "wrathp" then
+							nodeWin.getChild("rollstype").setValue("wrathp");
+						elseif sCommand == "wrathdmg" then
+							nodeWin.getChild("rollstype").setValue("wrathdmg");
+						elseif sCommand == "wrathdmgb" then
+							nodeWin.getChild("rollstype").setValue("wrathdmgb");
+						elseif sCommand == "wrathdmgm" then
+							nodeWin.getChild("rollstype").setValue("wrathdmgm");
+						elseif sCommand == "arsmagica" then
+							nodeWin.getChild("rollstype").setValue("arsmagica");
+						elseif sCommand == "myinit" then
+							nodeWin.getChild("rollstype").setValue("myinit");
+						elseif sCommand == "factwelve" then
+							nodeWin.getChild("rollstype").setValue("factwelve");
+						elseif sCommand == "earthdawn" then
+							nodeWin.getChild("rollstype").setValue("earthdawn");
+						elseif sCommand == "srun4" then
+							nodeWin.getChild("rollstype").setValue("srun4");
+						elseif sCommand == "gumshoe" then
+							nodeWin.getChild("rollstype").setValue("gumshoe");
+						elseif sCommand == "gsattack" then
+							nodeWin.getChild("rollstype").setValue("gsattack");
+						elseif sCommand == "iron" then
+							nodeWin.getChild("rollstype").setValue("iron");
+						elseif sCommand == "oladv_explode" then
+							nodeWin.getChild("rollstype").setValue("oladv_explode");
+						elseif sCommand == "oldis_explode" then
+							nodeWin.getChild("rollstype").setValue("oldis_explode");
+						elseif sCommand == "oladv_initiative" then
+							nodeWin.getChild("rollstype").setValue("oladv_initiative");
+						elseif sCommand == "oldis_initiative" then
+							nodeWin.getChild("rollstype").setValue("oldis_initiative");
+						elseif sCommand == "kilitar" then
+							nodeWin.getChild("rollstype").setValue("kilitar");
+						elseif sCommand == "spellpoints" then
+							nodeWin.getChild("rollstype").setValue("spellpoints");
+						elseif sCommand == "dbdamage" then
+							nodeWin.getChild("rollstype").setValue("dbdamage");
+						elseif sCommand == "damageroll" then
+							nodeWin.getChild("rollstype").setValue("dbdamage");
+						elseif sCommand == "damagedr" then
+							nodeWin.getChild("rollstype").setValue("damagedr");
+						elseif sCommand == "damagel5r" then
+							nodeWin.getChild("rollstype").setValue("legenddmg");
+						elseif sCommand == "damagedr4" then
+							nodeWin.getChild("rollstype").setValue("damagedr");
+						elseif sCommand == "gsdamage" then
+							nodeWin.getChild("rollstype").setValue("gsdamage");
+						elseif sCommand == "attackac" then
+							nodeWin.getChild("rollstype").setValue("attack");
+						elseif sCommand == "drwho" then
+							nodeWin.getChild("rollstype").setValue("drwho");
+						elseif sCommand == "describe" then
+							nodeWin.getChild("rollstype").setValue("chat");
+						elseif sCommand == nil then
+							nodeWin.getChild("rollstype").setValue("chat");
+						else nodeWin.getChild("rollstype").setValue("rolls");
+
+						end
+						end
+
+			</script>
+			</string_column>
+			
+			<line_column  name="line2"/>
+
+			<label_column name="tracker_label">
+				<static textres="ref_label_tracker_enabled" />
+			</label_column>
+			<button_checkbox_column name="tracker_enabled" />
+
+			<label_column name="tracker_number">
+				<static textres="ref_label_number" />
+			</label_column>
+			<number_column name="number_trackers">
+				<default>5</default>
+			</number_column>
+			<button_trackers_cycler name="trackers_icon" source="trackers_icon">
+				<anchored to="number_trackers" width="100" >
+					<top />
+					<left anchor="right" relation="relative" offset="30" />
+					</anchored>
+			</button_trackers_cycler>
+
+			<line_column  name="line3"/>
+			
+			<!-- ==== Parameter Configuration ==== -->
+			<label_column name="formula_label">
+				<static textres="ref_label_formula_enabled" />
+			</label_column>
+			<button_checkbox_column name="parameter_formula_enabled" />
+
+			<label_column name="formula_label_parameter">
+				<static textres="ref_label_parameter_formula" />
+			</label_column>
+			<string_column name="parameter_formula">
+				<script file="scripts/parameter_formula.lua" />
+			</string_column>
+
+
+			<label_column name="hide_label">
+				<static textres="ref_label_hide" />
+			</label_column>
+			<genericcontrol name="checkboxcolumnsanchor">
+				<anchored height="38" width="0">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7"/>
+					<left offset="97" />
+				</anchored>
+			</genericcontrol>
+
+			<label name="hide_p1_label">
+				<anchored to="checkboxcolumnsanchor" position="righthigh" height="16">
+					<left parent="checkboxcolumnsanchor" anchor="right" relation="current" offset="8" />
+				</anchored>
+				<static textres="ref_label_p1" />
+			</label>
+			<button_checkbox name="p1_hidden">
+				<anchored to="checkboxcolumnsanchor" position="rightlow" width="30" height="20">
+					<left parent="checkboxcolumnsanchor" anchor="right" relation="relative"/>
+				</anchored>
+			</button_checkbox>
+
+			<label name="hide_p2_label">
+				<anchored to="checkboxcolumnsanchor" position="righthigh" height="16">
+					<left parent="checkboxcolumnsanchor" anchor="right" relation="current" offset="8" />
+				</anchored>
+				<static textres="ref_label_p2" />
+			</label>
+			<button_checkbox name="p2_hidden">
+				<anchored to="checkboxcolumnsanchor" position="rightlow" width="30" height="20">
+					<left parent="checkboxcolumnsanchor" anchor="right" relation="relative"/>
+				</anchored>
+			</button_checkbox>
+
+			<label  name="hide_p3_label">
+				<anchored to="checkboxcolumnsanchor" position="righthigh" height="16">
+					<left parent="checkboxcolumnsanchor" anchor="right" relation="current" offset="8" />
+				</anchored>
+				<static textres="ref_label_p3" />
+			</label>
+			<button_checkbox name="p3_hidden">
+				<anchored to="checkboxcolumnsanchor" position="rightlow" width="30" height="20">
+					<left parent="checkboxcolumnsanchor" anchor="right" relation="relative"/>
+				</anchored>
+			</button_checkbox>
+<!--
+			<label>
+				<anchored to="checkboxcolumnsanchor" position="righthigh" height="16">
+					<left parent="checkboxcolumnsanchor" anchor="right" relation="current" offset="8" />
+				</anchored>
+				<static textres="ref_label_p4" />
+			</label>
+			<button_checkbox name="p4_hidden">
+				<anchored to="checkboxcolumnsanchor" position="rightlow" width="30" height="20">
+					<left parent="checkboxcolumnsanchor" anchor="right" relation="relative"/>
+				</anchored>
+			</button_checkbox>
+
+			<label>
+				<anchored to="checkboxcolumnsanchor" position="righthigh" height="16">
+					<left parent="checkboxcolumnsanchor" anchor="right" relation="current" offset="8" />
+				</anchored>
+				<static textres="ref_label_p5" />
+			</label>
+			<button_checkbox name="p5_hidden">
+				<anchored to="checkboxcolumnsanchor" position="rightlow" width="30" height="20">
+					<left parent="checkboxcolumnsanchor" anchor="right" relation="current"/>
+				</anchored>
+			</button_checkbox>
+-->
+
+
+
+			<label_column name="tooltip_p1_label">
+				<static textres="ref_label_p1_tooltip" />
+			</label_column>
+			<string_column name="p1_tooltip">
+				<default>Parameter 1</default>
+			</string_column>
+
+			<label_column name="tooltip_p2_label">
+				<static textres="ref_label_p2_tooltip" />
+			</label_column>
+			<string_column name="p2_tooltip">
+				<default>Parameter 2</default>
+			</string_column>
+
+			<label_column name="tooltip_p3_label">
+				<static textres="ref_label_p3_tooltip" />
+			</label_column>
+			<string_column name="p3_tooltip">
+				<default>Parameter 3</default>
+			</string_column>
+<!--
+			<label_column>
+				<static textres="ref_label_p4_tooltip" />
+			</label_column>
+			<string_column name="p4_tooltip">
+				<default>Parameter 4</default>
+			</string_column>
+
+			<label_column>
+				<static textres="ref_label_p5_tooltip" />
+			</label_column>
+			<string_column name="p5_tooltip">
+				<default>Parameter 5</default>
+			</string_column>
+-->
+			<line_column  name="line4"/>
+
+			<label_column name="refa_label">
+				<static textres="ref_label_refa" />
+			</label_column>
+			<string_column name="refa">
+				<readonly/>
+				<default>Drag Field or Roll Here</default>
+				<script file="scripts/parameter_reference.lua" />
+<!--
+				<script>
+					function onInit()
+						local winNode = window.getDatabaseNode();
+						local oldRef1 = window.getChild("ref1");
+						if( oldRef1 ~= nil ) then
+							local oldVal = oldRef1.getValue()
+							if( oldVal ~= "" ) then
+								setValue(oldVal);
+								oldRef1.setValue("");
+							end
+						end
+					end
+				</script>
+-->
+			</string_column>
+			<label_column>
+				<static textres="ref_label_refa_path" />
+				<invisible />
+<!--
+				<script>
+					function onInit()
+						local winNode = window.getDatabaseNode();
+						local oldRef1 = window.getChild("ref_label_ref1_path");
+						if( oldRef1 ~= nil ) then
+							local oldVal = oldRef1.getValue()
+							if( oldVal ~= "" ) then
+								setValue(oldVal);
+								oldRef1.setValue("");
+							end
+						end
+					end
+				</script>
+-->
+			</label_column>
+			<string_column name="refa_path">
+				<readonly/>
+				<invisible />
+			</string_column>
+
+			<label_column name="refb_label">
+				<static textres="ref_label_refb" />
+			</label_column>
+			<string_column name="refb">
+				<readonly/>
+				<default>Drag Field or Roll Here</default>
+				<script file="scripts/parameter_reference.lua" />
+			</string_column>
+			<label_column>
+				<static textres="ref_label_refb_path" />
+				<invisible />
+			</label_column>
+			<string_column name="refb_path">
+				<readonly/>
+				<invisible />
+			</string_column>
+
+			<label_column name="refc_label">
+				<static textres="ref_label_refc" />
+			</label_column>
+			<string_column name="refc">
+				<readonly/>
+				<default>Drag Field or Roll Here</default>
+				<script file="scripts/parameter_reference.lua" />
+			</string_column>
+			<label_column>
+				<static textres="ref_label_refc_path" />
+				<invisible />
+			</label_column>
+			<string_column name="refc_path">
+				<readonly/>
+				<invisible />
+			</string_column>
+
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="masterindexitem_cas">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/masterindexitem_window.lua" />
+		<sheetdata>
+			<masterindexitem_link name="link" />
+
+			<masterindexitem_anchor_right name="rightanchor" />
+			<masterindexitem_idelete name="idelete" />
+			<masterindexitem_access name="access" />
+			<masterindexitem_modified name="modified" />
+			<masterindexitem_category name="category" />
+
+			<masterindexitem_name name="name"/>
+ 			<helper_mc_rolls />
+			</sheetdata>
+	</windowclass>
+</root>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet">
+		<frame>charsheet</frame>
+		<placement>
+			<size width="550" height="740" />
+		</placement>
+		<sizelimits>
+			<!--<maximum width="625" />-->
+			<minimum width="550" height="740" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_npc</minimize>
+		<tooltip field="name" />
+		<nodelete />
+		<softclose />
+		<playercontrol />
+		<script>
+			function onInit()
+				if User.isLocal() then
+					speak.setVisible(false);
+					portrait.setVisible(false);
+					localportrait.setVisible(true);
+				end
+			end
+		</script>
+		<sheetdata>
+			<button_charactivate name="speak">
+				<bounds>-41,30,23,22</bounds>
+			</button_charactivate>
+		
+			<tokenfield name="token">
+				<bounds>-86,23,40,40</bounds>
+				<empty>token_empty</empty>
+				<tooltip textres="char_tooltip_token" />
+				<script>
+					function onDoubleClick(x, y)
+						CombatManager.openMap(window.getDatabaseNode());
+					end
+				</script>
+			</tokenfield>
+		
+			<genericcontrol>
+				<bounds>-137,21,45,45</bounds>
+				<icon>charlist_base</icon>
+				<disabled />
+			</genericcontrol>
+			<portrait_charlocal name="localportrait">
+				<bounds>-137,21,45,45</bounds>
+				<invisible />
+			</portrait_charlocal>
+			<portrait_char name="portrait">
+				<bounds>-137,21,45,45</bounds>
+			</portrait_char>
+			
+			<frame_char name="overviewframe">
+				<bounds>15,20,-185,45</bounds>
+			</frame_char>
+			<string_labeled name="name">
+				<anchored to="overviewframe" position="insidetopleft" offset="15,10" height="20">
+					<right offset="-125" />
+				</anchored>
+				<labelres>char_label_name</labelres>
+			</string_labeled>
+			<string_labeled name="playbook">
+				<anchored to="name" position="right" offset="2,0">
+					<right offset="115" />
+				</anchored>
+				<labelres>char_label_playbook</labelres>
+			</string_labeled>
+			
+<!--   Added new MoreCore Tab to the Character Sheet -->
+<!--   "more" is a reference only. charsheet_more refers to <windowclass name="charsheet_more"> which is found in the \campaign\record_char_more.xml file  -->
+			<subwindow name="more">
+				<bounds>0,65,-1,-20</bounds>
+				<class>charsheet_more</class>
+			</subwindow> 
+			<subwindow name="moredata">
+				<bounds>0,65,-1,-20</bounds>
+				<class>charsheet_moredata</class>
+			</subwindow> 
+			<subwindow name="inventory">
+				<bounds>0,65,-1,-20</bounds>
+				<class>charsheet_inventory</class>
+			</subwindow>
+			<subwindow name="notes">
+				<bounds>0,65,-1,-20</bounds>
+				<class>charsheet_notes</class>
+			</subwindow>
+
+			<tabs_charsheet>
+<!--   Added new MoreCore Tab to the Character Sheet -->
+				<tab>
+<!--   Create transparent PNG file with text for the new Tab. File lives under \graphics\tabs -->
+					<icon>tab_main</icon>
+					<subwindow>more</subwindow>
+				</tab> 
+				<tab>
+<!--   Create transparent PNG file with text for the new Tab. File lives under \graphics\tabs -->
+					<icon>tab_favors</icon>
+					<subwindow>moredata</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_inventory</icon>
+					<subwindow>inventory</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_notes</icon>
+					<subwindow>notes</subwindow>
+				</tab>
+				<activate>1</activate>
+			</tabs_charsheet>
+			<helper_mc_charsheet />
+		
+			<close_charsheet />
+		</sheetdata>
+	</windowclass>
+</root>

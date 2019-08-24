@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+<!-- Desktop Decal -->
+	
+	<!-- Desktop background -->
+	<framedef name="desktop">
+		<bitmap file="graphics/frames/desktop.jpg" />
+		<middle rect="0,0,1900,1350" />
+	</framedef>
+
+	<!-- Characters -->
+	<framedef name="charsheet">
+		<bitmap file="graphics/frames/frame4.jpg" />
+		<offset>15,40,15,25</offset>
+		<insideoffset>0,0,7,7</insideoffset>
+	</framedef>
+
+	<framedef name="groupbox">
+		<bitmap file="graphics/frames/groupbox.png" />
+		<offset>18,18,17,17</offset>
+	</framedef>
+	
+	<framedef name="referenceblock-com1">
+		<bitmap file="graphics/frames/refblock_com1.png" />
+		<offset>100,50,100,50</offset>
+	</framedef>
+
+	<framedef name="referenceblock-com2">
+		<bitmap file="graphics/frames/refblock_com2.png" />
+		<offset>100,50,100,50</offset>
+	</framedef>
+
+	<framedef name="referenceblock-com3">
+		<bitmap file="graphics/frames/refblock_com3.png" />
+		<offset>100,50,100,50</offset>
+	</framedef>
+
+	</root>
